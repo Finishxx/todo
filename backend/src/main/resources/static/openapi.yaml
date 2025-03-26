@@ -1,0 +1,84 @@
+openapi: 3.0.0
+info:
+  title: TODO App
+  description: REST API for TODO entries management application
+  version: 1.0.0
+servers:
+  - url: 'https://localhost:8080'
+components:
+  schemas:
+    TodoEntry:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+paths:
+  /entries:
+    get:
+      summary: Get all TODO entries
+      responses:
+        200:
+          description: All TODO entries read successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TodoEntry'
+    post:
+      summary: Add new TODO entry
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TodoEntry'
+      responses:
+        201:
+          description: TODO entry added successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TodoEntry'
+  /entries/{id}:
+    parameters:
+      - name : id
+        in : path
+        required : true
+        description: TODO entry ID
+        schema:
+          type: integer
+    get:
+      summary: Get TODO entry by its ID
+      responses:
+        200:
+          description: TODO entry read successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TodoEntry'
+        404:
+          description: TODO entry not found
+    put:
+      summary: Update TODO entry
+      requestBody:
+        description: Updated appointment
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TodoEntry'
+      responses:
+        200:
+          description: TODO entry updates successfully
+        404:
+          description: TODO entry not found
+    delete:
+      summary: Delete TODO entry
+      responses:
+        200:
+          description: TODO entry deleted successfully
+        404:
+          description: TODO entry not found
