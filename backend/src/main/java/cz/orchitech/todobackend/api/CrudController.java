@@ -66,7 +66,6 @@ public abstract class CrudController<E extends DomainEntity<K>, K, R, Q> {
         E entity = toEntityConverter.apply(dto);
         entity.setId(id);
         try {
-            // Try to update the entity
             E updated = service.update(entity);
             return ResponseEntity.ok(toDtoConverter.apply(updated));
         } catch (EntityNotFoundException e) {
