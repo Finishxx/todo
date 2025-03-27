@@ -82,13 +82,21 @@ paths:
               $ref: '#/components/schemas/NewTodoEntry'
       responses:
         200:
-          description: TODO entry updates successfully
-        404:
-          description: TODO entry not found
+          description: TODO entry updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TodoEntry'
+        201:
+          description: TODO entry created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TodoEntry'
     delete:
       summary: Delete TODO entry
       responses:
-        200:
+        204:
           description: TODO entry deleted successfully
         404:
           description: TODO entry not found
