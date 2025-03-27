@@ -27,6 +27,8 @@ components:
 paths:
   /entries:
     get:
+      tags:
+        - CRUD
       summary: Get all TODO entries
       responses:
         200:
@@ -38,6 +40,8 @@ paths:
                 items:
                   $ref: '#/components/schemas/TodoEntry'
     post:
+      tags:
+        - CRUD
       summary: Add new TODO entry
       requestBody:
         required: true
@@ -61,6 +65,8 @@ paths:
         schema:
           type: integer
     get:
+      tags:
+        - CRUD
       summary: Get TODO entry by its ID
       responses:
         200:
@@ -71,10 +77,12 @@ paths:
                 $ref: '#/components/schemas/TodoEntry'
         404:
           description: TODO entry not found
-    put:
+    patch:
+      tags:
+        - CRUD
       summary: Update TODO entry
       requestBody:
-        description: Updated appointment
+        description: Updated entry
         required: true
         content:
           application/json:
@@ -87,13 +95,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TodoEntry'
-        201:
-          description: TODO entry created successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TodoEntry'
+        404:
+          description: TODO entry with given id not found
     delete:
+      tags:
+        - CRUD
       summary: Delete TODO entry
       responses:
         204:

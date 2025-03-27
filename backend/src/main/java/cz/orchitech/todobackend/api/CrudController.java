@@ -41,7 +41,7 @@ public abstract class CrudController<E extends DomainEntity<K>, K, R, Q> {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<R> readONe(@PathVariable K id) {
+    public ResponseEntity<R> readOne(@PathVariable K id) {
         return service.readById(id)
                 .map(entity -> ResponseEntity.ok(toDtoConverter.apply(entity)))
                 .orElseGet(() -> ResponseEntity.notFound().build());
@@ -51,7 +51,7 @@ public abstract class CrudController<E extends DomainEntity<K>, K, R, Q> {
     public ResponseEntity<R> create(@RequestBody Q dto) {
         E entity = toEntityConverter.apply(dto);
         entity.setId(null); // The id needs to be null to be generated automatically
-        
+
         E created = service.create(entity);
         R response = toDtoConverter.apply(created);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
@@ -61,7 +61,7 @@ public abstract class CrudController<E extends DomainEntity<K>, K, R, Q> {
         return ResponseEntity.created(location).body(response);
     }
 
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<R> update(@RequestBody Q dto, @PathVariable K id) {
         E entity = toEntityConverter.apply(dto);
         entity.setId(id);
@@ -70,15 +70,7 @@ public abstract class CrudController<E extends DomainEntity<K>, K, R, Q> {
             E updated = service.update(entity);
             return ResponseEntity.ok(toDtoConverter.apply(updated));
         } catch (EntityNotFoundException e) {
-            // Create the entity instead
-            entity.setId(null); // The id needs to be null to be generated automatically
-            E created = service.create(entity);
-            R response = toDtoConverter.apply(created);
-            URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-                    .path("/{id}")
-                    .buildAndExpand(entity.getId())
-                    .toUri();
-            return ResponseEntity.created(location).body(response);
+            return ResponseEntity.notFound().build();
         }
     }
 
