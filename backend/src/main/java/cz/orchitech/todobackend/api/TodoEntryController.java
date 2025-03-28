@@ -7,6 +7,9 @@ import cz.orchitech.todobackend.model.TodoEntry;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Implements the API described in `resources/static/openapi.yaml`
+ */
 @RestController
 @RequestMapping("/entries")
 public class TodoEntryController extends CrudController<TodoEntry, Long, TodoEntryResponseDto, TodoEntryRequestDto> {

@@ -12,7 +12,7 @@ import java.util.function.Function;
 import java.util.stream.StreamSupport;
 
 /**
- * Abstract base class for a simple CRUD controller
+ * Abstract base class for a simple Restful CRUD controller
  *
  * @param <E> Entity
  * @param <K> Key
