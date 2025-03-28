@@ -12,7 +12,6 @@ public class TodoEntry implements DomainEntity<Long> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank
     private String name;
 
     public TodoEntry(Long id, String name) {
