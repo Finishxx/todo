@@ -28,7 +28,7 @@ paths:
   /entries:
     get:
       tags:
-        - CRUD
+        - TodoEntry CRUD operations
       summary: Get all TODO entries
       responses:
         200:
@@ -41,7 +41,7 @@ paths:
                   $ref: '#/components/schemas/TodoEntry'
     post:
       tags:
-        - CRUD
+        - TodoEntry CRUD operations
       summary: Add new TODO entry
       requestBody:
         required: true
@@ -66,7 +66,7 @@ paths:
           type: integer
     get:
       tags:
-        - CRUD
+        - TodoEntry CRUD operations
       summary: Get TODO entry by its ID
       responses:
         200:
@@ -79,7 +79,7 @@ paths:
           description: TODO entry not found
     patch:
       tags:
-        - CRUD
+        - TodoEntry CRUD operations
       summary: Update TODO entry
       requestBody:
         description: Updated entry
@@ -99,7 +99,7 @@ paths:
           description: TODO entry with given id not found
     delete:
       tags:
-        - CRUD
+        - TodoEntry CRUD operations
       summary: Delete TODO entry
       responses:
         204:
