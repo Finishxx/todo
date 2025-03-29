@@ -1,11 +1,19 @@
 <script setup lang="ts">
-let entries = []
+import Todo from "@/components/Todo.vue"
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-  </header>
-
-  <main></main>
+  <div class="app w3-blue-gray">
+    <Todo />
+  </div>
 </template>
+
+<style scoped>
+.app {
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+  min-height: 100vh;
+  padding: 5rem;
+}
+</style>

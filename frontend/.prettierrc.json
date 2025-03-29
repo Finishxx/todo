@@ -1,7 +1,8 @@
 {
   "$schema": "https://json.schemastore.org/prettierrc",
-    "semi": false,
-    "arrowParens": "avoid",
-    "proseWrap": "always",
-    "tabWidth": 2
+  "semi": false,
+  "arrowParens": "avoid",
+  "proseWrap": "always",
+  "tabWidth": 2,
+  "printWidth": 80
 }
