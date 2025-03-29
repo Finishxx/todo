@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import Todo from "@/components/Todo.vue"
+import TodoApp from "@/components/TodoApp.vue"
 </script>
 
 <template>
   <div class="app w3-blue-gray">
-    <Todo />
+    <TodoApp />
   </div>
 </template>
 
