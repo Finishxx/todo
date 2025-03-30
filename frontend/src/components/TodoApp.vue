@@ -4,6 +4,8 @@ import { type TodoEntry, TodoEntryStatus } from "@/model/TodoEntry.ts"
 import TodoSummary from "@/components/todo/TodoSummary.vue"
 import TodoFilter from "@/components/todo/TodoFilter.vue"
 import TodoEntryList from "@/components/todo/TodoEntryList.vue"
+import { openModal } from "@kolirt/vue-modal"
+import TestModal from "@/components/modal/TestModal.vue"
 
 const entries: Ref<TodoEntry[]> = ref([
   { id: 1, name: "Hello", status: TodoEntryStatus.TODO },
@@ -18,7 +20,19 @@ const entriesDone = computed(() => {
   return entries.value.filter(item => item.status == TodoEntryStatus.DONE)
 })
 
-function addEntry() {}
+function addEntry() {
+  openModal(TestModal, {
+    test: "some props",
+  })
+    // runs when modal is closed via confirmModal
+    .then(data => {
+      console.log("success", data)
+    })
+    // runs when modal is closed via closeModal or esc
+    .catch(() => {
+      console.log("catch")
+    })
+}
 
 function deleteEntry(entryId: number) {}
 
@@ -31,8 +45,6 @@ function changeStatus(entry: TodoEntry) {}
   <div class="todo-container w3-white w3-card-4">
     <TodoSummary :entries="entries" />
 
-    <button @click="addEntry" class="w3-button add-button">Add new TODO</button>
-
     <TodoFilter v-model="filterText" />
 
     <TodoEntryList
@@ -41,6 +53,7 @@ function changeStatus(entry: TodoEntry) {}
       @delete="deleteEntry"
       @update="updateEntry"
       @changeStatus="changeStatus"
+      @add="addEntry"
     ></TodoEntryList>
   </div>
 </template>
@@ -49,10 +62,5 @@ function changeStatus(entry: TodoEntry) {}
 .todo-container {
   max-width: 100%;
   min-width: 30rem;
-}
-
-.add-button {
-  display: block;
-  width: 100%;
 }
 </style>

@@ -19,7 +19,9 @@ const emits = defineEmits<{
 const filteredEntries: ComputedRef<TodoEntry[]> = computed(() => {
   if (filter == "") return entries
 
-  return entries.filter(entry => entry.name.includes(filter))
+  return entries.filter(entry =>
+    entry.name.toLowerCase().includes(filter.toLowerCase()),
+  )
 })
 </script>
 
@@ -43,7 +45,10 @@ const filteredEntries: ComputedRef<TodoEntry[]> = computed(() => {
       <tbody>
         <!-- Change entry status -->
         <tr v-for="entry in filteredEntries" :key="entry.id">
-          <td class="button" @click="$emit('changeStatus', entry)">
+          <td
+            class="clickable w3-hover-pale-blue"
+            @click="$emit('changeStatus', entry)"
+          >
             <i
               class="far fa-2x fa-square w3-grey w3-padding-small"
               v-if="entry.status == TodoEntryStatus.TODO"
