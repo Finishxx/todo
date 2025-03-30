@@ -5,6 +5,7 @@ export interface TodoEntry {
 }
 
 export enum TodoEntryStatus {
-  TODO,
-  DONE,
+  TODO = "TODO",
+  DOING = "DOING",
+  DONE = "DONE",
 }

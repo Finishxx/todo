@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, type Ref, ref } from "vue"
 import { type TodoEntry, TodoEntryStatus } from "@/model/TodoEntry.ts"
+import TodoSummary from "@/components/todo/TodoSummary.vue"
 
 const newTodoText: Ref<string> = ref("")
 const entries: Ref<TodoEntry[]> = ref([
@@ -32,7 +33,7 @@ function addTodo(): void {
 
 <template>
   <div class="todo-container w3-white w3-card-4">
-    <!-- Header -->
+    <TodoSummary :entries="entries" />
 
     <!-- Input -->
     <div class="w3-container 3-light-gray w3-padding">
