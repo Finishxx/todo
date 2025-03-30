@@ -8,6 +8,7 @@ import TodoEntryList from "@/components/todo/TodoEntryList.vue"
 const entries: Ref<TodoEntry[]> = ref([
   { id: 1, name: "Hello", status: TodoEntryStatus.TODO },
   { id: 2, name: "World", status: TodoEntryStatus.DONE },
+  { id: 3, name: "World", status: TodoEntryStatus.DOING },
 ])
 const filterText: Ref<string> = ref("")
 const entriesTodo = computed(() => {
