@@ -33,15 +33,9 @@ function addTodo(): void {
 <template>
   <div class="todo-container w3-white w3-card-4">
     <!-- Header -->
-    <div class="w3-container w3-black w3-margin-0 w3-bottombar w3-border-blue">
-      <h1>
-        <i class="fa-regular fa-clipboard-list"></i>
-        TODO List
-      </h1>
-    </div>
 
     <!-- Input -->
-    <div class="w3-container flex-container 3-light-gray w3-padding">
+    <div class="w3-container 3-light-gray w3-padding">
       <input
         class="w3-input w3-border-0"
         type="text"
