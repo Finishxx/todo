@@ -1,5 +1,27 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const model = defineModel()
 
-<template></template>
+function clear() {
+  model.value = ""
+}
+</script>
 
-<style scoped></style>
+<template>
+  <div class="w3-container filter-container">
+    <input
+      type="text"
+      v-model="model"
+      class="w3-input"
+      placeholder="Filter..."
+    />
+    <button class="w3-button" @click="clear()">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+</template>
+
+<style scoped>
+.filter-container {
+  display: flex;
+}
+</style>

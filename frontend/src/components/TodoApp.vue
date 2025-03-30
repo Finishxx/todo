@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { computed, type Ref, ref } from "vue"
+import { computed, type ComputedRef, type Ref, ref } from "vue"
 import { type TodoEntry, TodoEntryStatus } from "@/model/TodoEntry.ts"
 import TodoSummary from "@/components/todo/TodoSummary.vue"
+import TodoFilter from "@/components/todo/TodoFilter.vue"
 
-const newTodoText: Ref<string> = ref("")
 const entries: Ref<TodoEntry[]> = ref([
   { id: 1, name: "Hello", status: TodoEntryStatus.TODO },
   { id: 2, name: "World", status: TodoEntryStatus.DONE },
@@ -13,6 +13,15 @@ const entriesTodo = computed(() => {
 })
 const entriesDone = computed(() => {
   return entries.value.filter(item => item.status == TodoEntryStatus.DONE)
+})
+
+const newTodoText: Ref<string> = ref("")
+
+const filterText: Ref<string> = ref("")
+const filteredEntries: ComputedRef<TodoEntry[]> = computed(() => {
+  if (filterText.value == "") return entries.value
+
+  return entries.value.filter(entry => entry.name.includes(filterText.value))
 })
 
 function clearTodo(): void {
@@ -34,6 +43,7 @@ function addTodo(): void {
 <template>
   <div class="todo-container w3-white w3-card-4">
     <TodoSummary :entries="entries" />
+    <TodoFilter v-model="filterText" />
 
     <!-- Input -->
     <div class="w3-container 3-light-gray w3-padding">
