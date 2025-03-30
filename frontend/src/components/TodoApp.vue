@@ -1,11 +1,15 @@
 <script setup lang="ts">
-import { computed, type ComputedRef, type Ref, ref } from "vue"
+import { computed, type Ref, ref } from "vue"
 import { type TodoEntry, TodoEntryStatus } from "@/model/TodoEntry.ts"
 import TodoSummary from "@/components/todo/TodoSummary.vue"
 import TodoFilter from "@/components/todo/TodoFilter.vue"
 import TodoEntryList from "@/components/todo/TodoEntryList.vue"
 import { openModal } from "@kolirt/vue-modal"
 import TestModal from "@/components/modal/TestModal.vue"
+import ConfirmDeleteModal from "@/components/modal/ConfirmDeleteModal.vue"
+import EditTodoEntryModal, {
+  type EditTodoEntryModalProps,
+} from "@/components/modal/EditTodoEntryModal.vue"
 
 const entries: Ref<TodoEntry[]> = ref([
   { id: 1, name: "Hello", status: TodoEntryStatus.TODO },
@@ -34,9 +38,35 @@ function addEntry() {
     })
 }
 
-function deleteEntry(entryId: number) {}
+function deleteEntry(entry: TodoEntry) {
+  openModal(ConfirmDeleteModal, {
+    areYouSureMessage: `Are you sure you want to delete entry "${entry.name}"`,
+  })
+    // runs when modal is closed via confirmModal
+    .then(data => {
+      console.log("success", data)
+    })
+    // runs when modal is closed via closeModal or esc
+    .catch(() => {
+      console.log("catch")
+    })
+}
 
-function updateEntry(entry: TodoEntry) {}
+function updateEntry(entry: TodoEntry) {
+  openModal<EditTodoEntryModalProps, typeof EditTodoEntryModal>(
+    EditTodoEntryModal,
+    {
+      name: entry.name,
+      status: entry.status,
+    },
+  )
+    .then(data => {
+      console.log("success", data)
+    })
+    .catch(() => {
+      console.log("catch")
+    })
+}
 
 function changeStatus(entry: TodoEntry) {}
 </script>

@@ -11,8 +11,8 @@ const { entries, filter } = defineProps<Props>()
 
 const emits = defineEmits<{
   add: []
-  delete: [id: number]
-  update: [updatedEntry: TodoEntry]
+  delete: [entry: TodoEntry]
+  update: [entry: TodoEntry]
   changeStatus: [entry: TodoEntry]
 }>()
 
@@ -71,7 +71,7 @@ const filteredEntries: ComputedRef<TodoEntry[]> = computed(() => {
             </button>
             <button
               class="w3-button w3-red fa-cross"
-              @click="$emit('delete', entry.id)"
+              @click="$emit('delete', entry)"
             >
               Delete
             </button>
