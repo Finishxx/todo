@@ -2,8 +2,13 @@ import { createApp } from "vue"
 import App from "./App.vue"
 import { createModal } from "@kolirt/vue-modal"
 
+import Toast from "vue-toastification"
+
+import "vue-toastification/dist/index.css"
+
 const app = createApp(App)
 
+// Vue-Modal
 app.use(
   createModal({
     transitionTime: 200,
@@ -20,5 +25,8 @@ app.use(
     },
   }),
 )
+
+// Vue-Toastification
+app.use(Toast)
 
 app.mount("#app")

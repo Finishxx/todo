@@ -10,6 +10,7 @@ import TodoEditModal, {
   type EditTodoEntryData,
 } from "@/components/todo/modal/TodoEditModal.vue"
 import { TodoService } from "@/service/TodoService.ts"
+import { TYPE, useToast } from "vue-toastification"
 
 const entries: Ref<TodoEntry[]> = ref([
   { id: 1, name: "Hello", status: TodoEntryStatus.TODO },
@@ -17,44 +18,49 @@ const entries: Ref<TodoEntry[]> = ref([
   { id: 3, name: "World", status: TodoEntryStatus.DOING },
 ])
 const filterText: Ref<string> = ref("")
+const toast = useToast()
+
+function showNetworkErrorToast() {
+  toast("Network error!", { type: TYPE.ERROR })
+}
 
 function addEntry() {
   openModal<EditTodoEntryData, typeof TodoEditModal>(TodoEditModal, {
     name: "",
     status: TodoEntryStatus.TODO,
     title: "Add TODO",
+  }).then(data => {
+    toast("Add successful!", { type: TYPE.INFO })
   })
-    .then(data => {
-      console.log("Add success", data)
-    })
-    .catch(() => {
-      console.log("Add catch")
-    })
 }
 
 function deleteEntry(entry: TodoEntry) {
   openModal(TodoConfirmDeleteModal, {
     areYouSureMessage: `Are you sure you want to delete entry "${entry.name}"`,
+  }).then(data => {
+    toast("Delete successful!", { type: TYPE.INFO })
   })
-    .then(data => {
-      console.log("Delete success", data)
-    })
-    .catch(() => {
-      console.log("Delete catch")
-    })
 }
 
 function updateEntry(entry: TodoEntry) {
+  // Think that async/await would be less clear
   openModal<EditTodoEntryData, typeof TodoEditModal>(TodoEditModal, {
     name: entry.name,
     status: entry.status,
     title: "Update TODO",
   })
-    .then(data => {
-      console.log("Update success", data)
+    .then(updateData => {
+      const updatedEntry: TodoEntry = { id: entry.id, ...updateData }
+      return TodoService.patchTodo(updatedEntry)
     })
-    .catch(() => {
-      console.log("Update catch")
+    .then(updated => {
+      entry = updated
+      toast("Update successful!", { type: TYPE.INFO })
+    })
+    .catch(error => {
+      console.log(error)
+
+      showNetworkErrorToast()
     })
 }
 

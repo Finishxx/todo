@@ -1,7 +1,7 @@
 import axios from "axios"
 import { type TodoEntry } from "../model/TodoEntry"
 
-const API_URL = "http://localhost:8080"
+const API_URL = "http://localhost:8080/entries"
 
 /** The same for the moment being */
 type TodoEntryDto = TodoEntry
