@@ -29,17 +29,36 @@ function addEntry() {
     name: "",
     status: TodoEntryStatus.TODO,
     title: "Add TODO",
-  }).then(data => {
-    toast("Add successful!", { type: TYPE.INFO })
   })
+    .then(data => {
+      return TodoService.newTodo(data.name, data.status)
+    })
+    .then(newTodo => {
+      entries.value.push(newTodo)
+      toast("Add successful!", { type: TYPE.INFO })
+    })
+    .catch(error => {
+      console.log(error)
+      showNetworkErrorToast()
+    })
 }
 
 function deleteEntry(entry: TodoEntry) {
   openModal(TodoConfirmDeleteModal, {
     areYouSureMessage: `Are you sure you want to delete entry "${entry.name}"`,
-  }).then(data => {
-    toast("Delete successful!", { type: TYPE.INFO })
   })
+    .then(() => {
+      return TodoService.deleteTodo(entry.id)
+    })
+    .then(() => {
+      const index = entries.value.findIndex(entry => entry.id == entry.id)
+      // TODO: Delete from a list
+      toast("Delete successful!", { type: TYPE.INFO })
+    })
+    .catch(error => {
+      console.log(error)
+      showNetworkErrorToast()
+    })
 }
 
 function updateEntry(entry: TodoEntry) {
@@ -54,12 +73,16 @@ function updateEntry(entry: TodoEntry) {
       return TodoService.patchTodo(updatedEntry)
     })
     .then(updated => {
-      entry = updated
+      const index = entries.value.findIndex(entry => entry.id == updated.id)
+      if (index == -1) {
+        entries.value.push(updated)
+      } else {
+        entries.value[index] = updated
+      }
       toast("Update successful!", { type: TYPE.INFO })
     })
     .catch(error => {
       console.log(error)
-
       showNetworkErrorToast()
     })
 }

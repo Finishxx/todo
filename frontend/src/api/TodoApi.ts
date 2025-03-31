@@ -1,5 +1,5 @@
 import axios from "axios"
-import { type TodoEntry } from "../model/TodoEntry"
+import { type TodoEntry, TodoEntryStatus } from "../model/TodoEntry"
 
 const API_URL = "http://localhost:8080/entries"
 
@@ -26,11 +26,8 @@ export const TodoApi = {
     return response.data
   },
 
-  async postTodo(todo: TodoEntry): Promise<TodoEntry> {
-    const response = await axios.post<TodoEntryDto>(
-      API_URL,
-      entryToNewDto(todo),
-    )
+  async postTodo(name: string, status: TodoEntryStatus): Promise<TodoEntry> {
+    const response = await axios.post<TodoEntryDto>(API_URL, { name, status })
     return response.data
   },
 

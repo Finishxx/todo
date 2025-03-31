@@ -18,8 +18,8 @@ export const TodoService = {
     return await TodoApi.getAllTodos()
   },
 
-  async postTodo(todo: TodoEntry): Promise<TodoEntry> {
-    return await TodoApi.postTodo(todo)
+  async newTodo(name: string, status: TodoEntryStatus): Promise<TodoEntry> {
+    return await TodoApi.postTodo(name, status)
   },
 
   async patchTodo(todo: TodoEntry): Promise<TodoEntry> {
