@@ -1,4 +1,5 @@
-import { TodoEntryStatus } from "@/model/TodoEntry.ts"
+import { type TodoEntry, TodoEntryStatus } from "@/model/TodoEntry.ts"
+import { TodoApi } from "@/api/TodoApi.ts"
 
 /** Business logic for the TodoEntries */
 export const TodoService = {
@@ -11,5 +12,21 @@ export const TodoService = {
       case TodoEntryStatus.DONE:
         return TodoEntryStatus.TODO
     }
+  },
+
+  async loadTodos(): Promise<TodoEntry[]> {
+    return await TodoApi.getAllTodos()
+  },
+
+  async postTodo(todo: TodoEntry): Promise<TodoEntry> {
+    return await TodoApi.postTodo(todo)
+  },
+
+  async patchTodo(todo: TodoEntry): Promise<TodoEntry> {
+    return await TodoApi.patchTodo(todo)
+  },
+
+  async deleteTodo(id: number): Promise<void> {
+    await TodoApi.deleteTodo(id)
   },
 } as const

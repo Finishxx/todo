@@ -22,7 +22,7 @@ page, but not in the sense of SPA needing Vue Router.
 The project was generated using
 [create-vue](https://github.com/vuejs/create-vue).
 
-Took **big** inspiration (the book-wide project was also a TODO app) from
+Took **big** inspiration (part of the book used TODO app as a project) from
 the book
 [Vue.js 3 Design Patterns and Best Practices](https://www.amazon.com/Vue-js-Design-Patterns-Best-Practices/dp/1803238070).
 

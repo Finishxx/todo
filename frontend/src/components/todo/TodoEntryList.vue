@@ -32,7 +32,7 @@ const filteredEntries: ComputedRef<TodoEntry[]> = computed(() => {
       <thead>
         <tr class="w3-topbar">
           <th>Status</th>
-          <th>Item</th>
+          <th>Name</th>
           <th class="w3-right-align">
             <button
               @click="$emit('add')"
