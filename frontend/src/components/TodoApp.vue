@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, type ComputedRef, type Ref, ref } from "vue"
+import { computed, type ComputedRef, onMounted, type Ref, ref } from "vue"
 import { type TodoEntry, TodoEntryStatus } from "@/model/TodoEntry.ts"
 import TodoSummary from "@/components/todo/TodoSummary.vue"
 import TodoFilter from "@/components/todo/TodoFilter.vue"
@@ -11,6 +11,7 @@ import TodoEditModal, {
 } from "@/components/todo/modal/TodoEditModal.vue"
 import { TodoService } from "@/service/TodoService.ts"
 import { TYPE, useToast } from "vue-toastification"
+import { type ActiveLoader, useLoading } from "vue-loading-overlay"
 
 const entries: Ref<Map<number, TodoEntry>> = ref(new Map([]))
 
@@ -18,8 +19,22 @@ const entryList: ComputedRef<TodoEntry[]> = computed(() => {
   return Array.from(entries.value.values())
 })
 
+onMounted(async () => {
+  try {
+    loader = loading.show()
+    const allEntries: TodoEntry[] = await TodoService.loadTodos()
+    entries.value = new Map(allEntries.map(entry => [entry.id, entry]))
+  } catch {
+    showNetworkErrorToast()
+  } finally {
+    loader.hide()
+  }
+})
+
 const filterText: Ref<string> = ref("")
 const toast = useToast()
+const loading = useLoading({})
+let loader: ActiveLoader
 
 function showNetworkErrorToast() {
   toast("Network error!", { type: TYPE.ERROR })
@@ -32,6 +47,7 @@ function addEntry() {
     title: "Add TODO",
   })
     .then(data => {
+      loader = loading.show()
       return TodoService.newTodo(data.name, data.status)
     })
     .then(newTodo => {
@@ -42,6 +58,9 @@ function addEntry() {
       console.log(error)
       showNetworkErrorToast()
     })
+    .finally(() => {
+      loader.hide()
+    })
 }
 
 function deleteEntry(entry: TodoEntry) {
@@ -49,6 +68,7 @@ function deleteEntry(entry: TodoEntry) {
     areYouSureMessage: `Are you sure you want to delete entry "${entry.name}"`,
   })
     .then(() => {
+      loader = loading.show()
       return TodoService.deleteTodo(entry.id)
     })
     .then(() => {
@@ -58,6 +78,9 @@ function deleteEntry(entry: TodoEntry) {
     .catch(error => {
       console.log(error)
       showNetworkErrorToast()
+    })
+    .finally(() => {
+      loader.hide()
     })
 }
 
@@ -70,6 +93,7 @@ function updateEntry(entry: TodoEntry) {
   })
     .then(updateData => {
       const updatedEntry: TodoEntry = { id: entry.id, ...updateData }
+      loader = loading.show()
       return TodoService.patchTodo(updatedEntry)
     })
     .then(updated => {
@@ -81,6 +105,9 @@ function updateEntry(entry: TodoEntry) {
     .catch(error => {
       console.log(error)
       showNetworkErrorToast()
+    })
+    .finally(() => {
+      loader.hide()
     })
 }
 

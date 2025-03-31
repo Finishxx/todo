@@ -1,10 +1,11 @@
 import { createApp } from "vue"
 import App from "./App.vue"
 import { createModal } from "@kolirt/vue-modal"
-
+import { LoadingPlugin } from "vue-loading-overlay"
 import Toast from "vue-toastification"
 
 import "vue-toastification/dist/index.css"
+import "vue-loading-overlay/dist/css/index.css"
 
 const app = createApp(App)
 
@@ -28,5 +29,5 @@ app.use(
 
 // Vue-Toastification
 app.use(Toast)
-
+app.use(LoadingPlugin)
 app.mount("#app")
