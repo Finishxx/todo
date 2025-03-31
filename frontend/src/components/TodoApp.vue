@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { computed, type Ref, ref } from "vue"
+import { type Ref, ref } from "vue"
 import { type TodoEntry, TodoEntryStatus } from "@/model/TodoEntry.ts"
 import TodoSummary from "@/components/todo/TodoSummary.vue"
 import TodoFilter from "@/components/todo/TodoFilter.vue"
 import TodoEntryList from "@/components/todo/TodoEntryList.vue"
 import { openModal } from "@kolirt/vue-modal"
-import ConfirmDeleteModal from "@/components/modal/ConfirmDeleteModal.vue"
-import EditTodoEntryModal, {
+import TodoConfirmDeleteModal from "@/components/todo/modal/TodoConfirmDeleteModal.vue"
+import TodoEditModal, {
   type EditTodoEntryData,
-} from "@/components/modal/EditTodoEntryModal.vue"
+} from "@/components/todo/modal/TodoEditModal.vue"
 import { TodoService } from "@/service/TodoService.ts"
 
 const entries: Ref<TodoEntry[]> = ref([
@@ -17,15 +17,9 @@ const entries: Ref<TodoEntry[]> = ref([
   { id: 3, name: "World", status: TodoEntryStatus.DOING },
 ])
 const filterText: Ref<string> = ref("")
-const entriesTodo = computed(() => {
-  return entries.value.filter(item => item.status == TodoEntryStatus.TODO)
-})
-const entriesDone = computed(() => {
-  return entries.value.filter(item => item.status == TodoEntryStatus.DONE)
-})
 
 function addEntry() {
-  openModal<EditTodoEntryData, typeof EditTodoEntryModal>(EditTodoEntryModal, {
+  openModal<EditTodoEntryData, typeof TodoEditModal>(TodoEditModal, {
     name: "",
     status: TodoEntryStatus.TODO,
     title: "Add TODO",
@@ -39,7 +33,7 @@ function addEntry() {
 }
 
 function deleteEntry(entry: TodoEntry) {
-  openModal(ConfirmDeleteModal, {
+  openModal(TodoConfirmDeleteModal, {
     areYouSureMessage: `Are you sure you want to delete entry "${entry.name}"`,
   })
     .then(data => {
@@ -51,7 +45,7 @@ function deleteEntry(entry: TodoEntry) {
 }
 
 function updateEntry(entry: TodoEntry) {
-  openModal<EditTodoEntryData, typeof EditTodoEntryModal>(EditTodoEntryModal, {
+  openModal<EditTodoEntryData, typeof TodoEditModal>(TodoEditModal, {
     name: entry.name,
     status: entry.status,
     title: "Update TODO",
@@ -90,5 +84,8 @@ function changeStatus(entry: TodoEntry) {
 .todo-container {
   max-width: 100%;
   min-width: 30rem;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
 </style>

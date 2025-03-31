@@ -41,5 +41,6 @@ const statusToCount: ComputedRef<Map<TodoEntryStatus, number>> = computed(
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
+  padding: 1rem;
 }
 </style>

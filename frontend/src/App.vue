@@ -6,6 +6,7 @@ import { ModalTarget } from "@kolirt/vue-modal"
 </script>
 
 <template>
+  <!-- Needed for vue-modal to work -->
   <ModalTarget />
 
   <div class="app w3-blue-gray">
@@ -17,10 +18,11 @@ import { ModalTarget } from "@kolirt/vue-modal"
 
 <style scoped>
 .app {
-  width: 100vw;
-  min-height: 100vh;
-  padding: 3rem;
+  display: flex;
   flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  padding: 3rem;
   color: black;
 }
 </style>

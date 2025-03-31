@@ -7,14 +7,14 @@ function clear() {
 </script>
 
 <template>
-  <div class="w3-container filter-container">
+  <div class="w3-container filter-container w3-padding">
     <input
       type="text"
       v-model="model"
-      class="w3-input"
+      class="w3-input w3-border"
       placeholder="Filter..."
     />
-    <button class="w3-button" @click="clear()">
+    <button class="w3-button w3-border" @click="clear()">
       <i class="fas fa-times"></i>
     </button>
   </div>
