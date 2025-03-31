@@ -14,9 +14,12 @@ public class TodoEntry implements DomainEntity<Long> {
     private Long id;
     private String name;
 
-    public TodoEntry(Long id, String name) {
+    private TodoEntryStatus status;
+
+    public TodoEntry(Long id, String name, TodoEntryStatus status) {
         this.id = id;
         this.name = name;
+        this.status = status;
     }
 
     public TodoEntry() {
@@ -36,5 +39,13 @@ public class TodoEntry implements DomainEntity<Long> {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public TodoEntryStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(TodoEntryStatus status) {
+        this.status = status;
     }
 }

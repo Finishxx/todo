@@ -3,6 +3,7 @@ package cz.orchitech.todobackend.api;
 import cz.orchitech.todobackend.business.CrudService;
 import cz.orchitech.todobackend.model.DomainEntity;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -22,7 +23,9 @@ import java.util.stream.StreamSupport;
 public abstract class CrudController<E extends DomainEntity<K>, K, R, Q> {
 
     protected CrudService<E, K> service;
+    /** Ideally should not throw */
     protected Function<E, R> toDtoConverter;
+    /** Can throw since validation... ideally we would create a custom validator */
     protected Function<Q, E> toEntityConverter;
 
     public CrudController(CrudService<E, K> service, Function<E, R> toDtoConverter,
@@ -34,6 +37,7 @@ public abstract class CrudController<E extends DomainEntity<K>, K, R, Q> {
 
     @GetMapping
     public ResponseEntity<Iterable<R>> readAll() {
+
         Iterable<R> result = StreamSupport
                 .stream(service.readAll().spliterator(), false)
                 .map(toDtoConverter).toList();
@@ -48,7 +52,7 @@ public abstract class CrudController<E extends DomainEntity<K>, K, R, Q> {
     }
 
     @PostMapping
-    public ResponseEntity<R> create(@RequestBody Q dto) {
+    public ResponseEntity<R> create(@RequestBody @Valid Q dto) {
         E entity = toEntityConverter.apply(dto);
         entity.setId(null); // The id needs to be null to be generated automatically
 
@@ -62,7 +66,7 @@ public abstract class CrudController<E extends DomainEntity<K>, K, R, Q> {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<R> update(@RequestBody Q dto, @PathVariable K id) {
+    public ResponseEntity<R> update(@RequestBody @Valid Q dto, @PathVariable K id) {
         E entity = toEntityConverter.apply(dto);
         entity.setId(id);
         try {

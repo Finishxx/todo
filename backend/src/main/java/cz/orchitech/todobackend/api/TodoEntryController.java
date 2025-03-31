@@ -4,6 +4,8 @@ import cz.orchitech.todobackend.api.dto.TodoEntryRequestDto;
 import cz.orchitech.todobackend.api.dto.TodoEntryResponseDto;
 import cz.orchitech.todobackend.business.TodoEntryService;
 import cz.orchitech.todobackend.model.TodoEntry;
+import cz.orchitech.todobackend.model.TodoEntryStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/entries")
+@CrossOrigin(origins = "*")
 public class TodoEntryController extends CrudController<TodoEntry, Long, TodoEntryResponseDto, TodoEntryRequestDto> {
 
     public TodoEntryController(
@@ -19,8 +22,8 @@ public class TodoEntryController extends CrudController<TodoEntry, Long, TodoEnt
         // Converters inline for simplicity’s sake
         super(
                 service,
-                entity -> new TodoEntryResponseDto(entity.getId(), entity.getName()),
-                dto -> new TodoEntry(null, dto.name()));
+                entity -> new TodoEntryResponseDto(entity.getId(), entity.getName(), entity.getStatus().name()),
+                dto -> new TodoEntry(null, dto.name(), dto.status()));
     }
 
 
