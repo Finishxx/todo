@@ -33,7 +33,9 @@ onMounted(async () => {
 
 const filterText: Ref<string> = ref("")
 const toast = useToast()
-const loading = useLoading({})
+const loading = useLoading({
+  opacity: 0,
+})
 let loader: ActiveLoader
 
 function showNetworkErrorToast() {
@@ -111,8 +113,21 @@ function updateEntry(entry: TodoEntry) {
     })
 }
 
-function changeStatus(entry: TodoEntry) {
-  entry.status = TodoService.nextTodoState(entry.status)
+async function changeStatus(entry: TodoEntry) {
+  loader = loading.show()
+  const updatedEntry: TodoEntry = {
+    id: entry.id,
+    name: entry.name,
+    status: TodoService.nextTodoState(entry.status),
+  }
+  try {
+    await TodoService.patchTodo(updatedEntry)
+    entry.status = updatedEntry.status
+  } catch {
+    showNetworkErrorToast()
+  } finally {
+    loader.hide()
+  }
 }
 </script>
 
