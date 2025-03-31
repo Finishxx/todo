@@ -9,6 +9,7 @@ interface Props {
 
 const { entries, filter } = defineProps<Props>()
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const emits = defineEmits<{
   add: []
   delete: [entry: TodoEntry]

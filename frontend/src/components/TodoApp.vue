@@ -5,11 +5,11 @@ import TodoSummary from "@/components/todo/TodoSummary.vue"
 import TodoFilter from "@/components/todo/TodoFilter.vue"
 import TodoEntryList from "@/components/todo/TodoEntryList.vue"
 import { openModal } from "@kolirt/vue-modal"
-import TestModal from "@/components/modal/TestModal.vue"
 import ConfirmDeleteModal from "@/components/modal/ConfirmDeleteModal.vue"
 import EditTodoEntryModal, {
-  type EditTodoEntryModalProps,
+  type EditTodoEntryData,
 } from "@/components/modal/EditTodoEntryModal.vue"
+import { TodoService } from "@/service/TodoService.ts"
 
 const entries: Ref<TodoEntry[]> = ref([
   { id: 1, name: "Hello", status: TodoEntryStatus.TODO },
@@ -25,16 +25,16 @@ const entriesDone = computed(() => {
 })
 
 function addEntry() {
-  openModal(TestModal, {
-    test: "some props",
+  openModal<EditTodoEntryData, typeof EditTodoEntryModal>(EditTodoEntryModal, {
+    name: "",
+    status: TodoEntryStatus.TODO,
+    title: "Add TODO",
   })
-    // runs when modal is closed via confirmModal
     .then(data => {
-      console.log("success", data)
+      console.log("Add success", data)
     })
-    // runs when modal is closed via closeModal or esc
     .catch(() => {
-      console.log("catch")
+      console.log("Add catch")
     })
 }
 
@@ -42,33 +42,31 @@ function deleteEntry(entry: TodoEntry) {
   openModal(ConfirmDeleteModal, {
     areYouSureMessage: `Are you sure you want to delete entry "${entry.name}"`,
   })
-    // runs when modal is closed via confirmModal
     .then(data => {
-      console.log("success", data)
+      console.log("Delete success", data)
     })
-    // runs when modal is closed via closeModal or esc
     .catch(() => {
-      console.log("catch")
+      console.log("Delete catch")
     })
 }
 
 function updateEntry(entry: TodoEntry) {
-  openModal<EditTodoEntryModalProps, typeof EditTodoEntryModal>(
-    EditTodoEntryModal,
-    {
-      name: entry.name,
-      status: entry.status,
-    },
-  )
+  openModal<EditTodoEntryData, typeof EditTodoEntryModal>(EditTodoEntryModal, {
+    name: entry.name,
+    status: entry.status,
+    title: "Update TODO",
+  })
     .then(data => {
-      console.log("success", data)
+      console.log("Update success", data)
     })
     .catch(() => {
-      console.log("catch")
+      console.log("Update catch")
     })
 }
 
-function changeStatus(entry: TodoEntry) {}
+function changeStatus(entry: TodoEntry) {
+  entry.status = TodoService.nextTodoState(entry.status)
+}
 </script>
 
 <template>
