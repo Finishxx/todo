@@ -4,12 +4,12 @@ import { createModal } from "@kolirt/vue-modal"
 import { LoadingPlugin } from "vue-loading-overlay"
 import Toast from "vue-toastification"
 
-import "vue-toastification/dist/index.css"
-import "vue-loading-overlay/dist/css/index.css"
-
 const app = createApp(App)
 
-// Vue-Modal
+// Plugins initialization
+import "vue-loading-overlay/dist/css/index.css"
+import "vue-toastification/dist/index.css"
+
 app.use(
   createModal({
     transitionTime: 200,
@@ -26,8 +26,7 @@ app.use(
     },
   }),
 )
-
-// Vue-Toastification
 app.use(Toast)
 app.use(LoadingPlugin)
+
 app.mount("#app")

@@ -4,7 +4,7 @@ export interface TodoEntry {
   status: TodoEntryStatus
 }
 
-/** Keep the keys and values the same */
+/** Do please keep the keys and values the same */
 export enum TodoEntryStatus {
   TODO = "TODO",
   DOING = "DOING",

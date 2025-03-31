@@ -13,12 +13,11 @@ import { TYPE, useToast } from "vue-toastification"
 import { type ActiveLoader, useLoading } from "vue-loading-overlay"
 import TodoConfirmDeleteModal from "@/components/todo/modal/TodoConfirmDeleteModal.vue"
 
+// TodoEntries
 const entries: Ref<Map<number, TodoEntry>> = ref(new Map([]))
-
 const entryList: ComputedRef<TodoEntry[]> = computed(() => {
   return Array.from(entries.value.values())
 })
-
 onMounted(async () => {
   try {
     startLoading()
@@ -30,8 +29,9 @@ onMounted(async () => {
     stopLoading()
   }
 })
-
 const filterText: Ref<string> = ref("")
+
+// Plugins
 const toast = useToast()
 const loading = useLoading({
   opacity: 0,
@@ -50,6 +50,7 @@ function showNetworkErrorToast() {
   toast("Network error!", { type: TYPE.ERROR })
 }
 
+// UI logic
 async function addEntry() {
   let modalData
   try {
@@ -64,9 +65,12 @@ async function addEntry() {
   } catch {
     return
   }
-  startLoading()
   try {
-    const newTodo = await TodoService.newTodo(modalData.name, modalData.status)
+    startLoading()
+    const newTodo = await TodoService.addNewTodo(
+      modalData.name,
+      modalData.status,
+    )
     entries.value.set(newTodo.id, newTodo)
     toast("Add successful!", { type: TYPE.INFO })
   } catch {
@@ -84,8 +88,9 @@ async function deleteEntry(entry: TodoEntry) {
   } catch {
     return
   }
-  startLoading()
+
   try {
+    startLoading()
     await TodoService.deleteTodo(entry.id)
     entries.value.delete(entry.id)
     toast("Delete successful!", { type: TYPE.INFO })
@@ -110,10 +115,11 @@ async function updateEntry(entry: TodoEntry) {
   } catch {
     return
   }
-  startLoading()
+
   try {
+    startLoading()
     const updatedEntry: TodoEntry = { id: entry.id, ...modalData }
-    const patchedEntry = await TodoService.patchTodo(updatedEntry)
+    const patchedEntry = await TodoService.updateTodo(updatedEntry)
     if (patchedEntry.id != entry.id) throw Error()
     entries.value.set(patchedEntry.id, patchedEntry)
     toast("Update successful!", { type: TYPE.INFO })
@@ -125,11 +131,13 @@ async function updateEntry(entry: TodoEntry) {
 }
 
 async function changeStatus(entry: TodoEntry) {
-  loader = loading.show()
-  const updatedEntry: TodoEntry = { ...entry }
-  updatedEntry.status = TodoService.nextTodoState(entry.status)
   try {
-    await TodoService.patchTodo(updatedEntry)
+    loader = loading.show()
+    const updatedEntry: TodoEntry = {
+      ...entry,
+      status: TodoService.getNextTodoState(entry.status),
+    }
+    await TodoService.updateTodo(updatedEntry)
     entry.status = updatedEntry.status
   } catch {
     showNetworkErrorToast()

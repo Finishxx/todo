@@ -1,7 +1,7 @@
 import axios from "axios"
 import { type TodoEntry, TodoEntryStatus } from "../model/TodoEntry"
 
-const API_URL = "http://localhost:8080/entries"
+const URL = "http://localhost:8080/entries"
 
 /** The same for the moment being */
 type TodoEntryDto = TodoEntry
@@ -15,31 +15,32 @@ function entryToNewDto(entry: TodoEntry): NewTodoEntryDto {
   return { name: entry.name, status: entry.status }
 }
 
+/** Mirrors the backend's OpenAPI specification */
 export const TodoApi = {
   async getTodo(id: number): Promise<TodoEntry> {
-    const response = await axios.get<TodoEntry>(`${API_URL}/${id}`)
+    const response = await axios.get<TodoEntry>(`${URL}/${id}`)
     return response.data
   },
 
   async getAllTodos(): Promise<TodoEntry[]> {
-    const response = await axios.get<TodoEntry[]>(API_URL)
+    const response = await axios.get<TodoEntry[]>(URL)
     return response.data
   },
 
   async postTodo(name: string, status: TodoEntryStatus): Promise<TodoEntry> {
-    const response = await axios.post<TodoEntryDto>(API_URL, { name, status })
+    const response = await axios.post<TodoEntryDto>(URL, { name, status })
     return response.data
   },
 
   async patchTodo(todo: TodoEntry): Promise<TodoEntry> {
     const response = await axios.patch<TodoEntry>(
-      `${API_URL}/${todo.id}`,
+      `${URL}/${todo.id}`,
       entryToNewDto(todo),
     )
     return response.data
   },
 
   async deleteTodo(id: number): Promise<void> {
-    await axios.delete(`${API_URL}/${id}`)
+    await axios.delete(`${URL}/${id}`)
   },
 } as const
