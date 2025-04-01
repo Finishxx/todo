@@ -1,15 +1,16 @@
 # TODO Backend
 
-his project follows a classic three-tier architecture and provides a CRUD REST
+This project follows a classic three-tier architecture and provides a CRUD REST
 API that adheres to the OpenAPI specification, defined in
 `src/main/resources/static/openapi.yaml`.
 
 To streamline development, the backend includes an abstract `CrudService` and
-`CrudController`, which implement basic CRUD operations for any DomainEntity.
+`CrudController`, which implement basic CRUD operations for any `DomainEntity`.
 These components, along with corresponding DTOs and entity-DTO conversion
-functions, simplify the addition of new entities.
+functions, simplify the addition of new entities. Of course at this moment it
+is laughably overengineered.
 
-Entities are persisted in in-memory database by default. There is a config
+Entities are stored in in-memory database by default. There is a config
 specifically for use by Docker Compose which uses PostgresSQL database inside
 another Docker container.
 
