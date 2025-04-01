@@ -1,4 +1,4 @@
-# Developer interview preparation
+# Fullstack TODO app
 
 Decided to join the backend and frontend repos for simplicity's sake, although
 in retrospect it did not simplify things much and made commit history a mess.
