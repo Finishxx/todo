@@ -5,8 +5,8 @@ part of interview preparation for a developer job.
 
 ## Get started
 
-Run the dev server and open the site in your browser. The application requires a
-backend server to be running to function properly.
+Run the dev server and open the site in your browser. The application requires an
+already running backend server on `http://localhost:8080` to function properly.
 
 ```bash
 $ npm run dev
