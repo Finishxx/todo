@@ -5,7 +5,7 @@ as a part of interview preparation for a developer job.
 
 ## Get started
 
-Run the dev server and open the site in browser. The application requires a
+Run the dev server and open the site in your browser. The application requires a
 backend server to be running to function properly.
 
 ```bash

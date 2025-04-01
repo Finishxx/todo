@@ -1,19 +1,29 @@
-## Backend
+# TODO Backend
 
-Decided on a classic three-tiered architecture
+his project follows a classic three-tier architecture and provides a CRUD REST API that adheres to the OpenAPI
+specification, defined in `src/main/resources/static/openapi.yaml`.
 
-Created the scaffolding for easily adding other entities to CRUD over.
+To streamline development, the backend includes an abstract `CrudService` and `CrudController`, which implement basic
+CRUD operations for any DomainEntity. These components, along with corresponding DTOs and entity-DTO conversion
+functions, simplify the addition of new entities.
 
-It did not make sense to use the PUT, since I want ID generation to be on the
-BE/DB fully.
+## Get started
 
-Decided to start also provide an OpenAPI description of the API.
+### Run the server
 
-### TODOs
+To start the backend, run:
 
-[ ] Docker - compose DB and the backend
-[ ] Consider serving the frontend on some url
-[ ] Maybe locking/transactional?
-[ ] Unit test - ideally seeing the frontend and missing some feature would
-inspire me to create some business logic actually worth testing
+```bash
+$ ./gradlew runBoot
+```
 
+Once the server is running, you can explore the API documentation at http://localhost:8080/swagger-ui/index.html or
+connect to it from the frontend.
+
+### Run tests
+
+To execute tests, use:
+
+```bash
+$ ./gradlew test
+```
