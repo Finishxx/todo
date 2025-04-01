@@ -9,7 +9,7 @@ Please do refer further to appropriate `README.md` files in `backend` and
 ## Get started
 
 A Docker Compose file is provided for ease of use. Admittedly the Docker files
-were written largely by AI.
+were written largely by AI so quality might vary.
 
 ```bash
 $ docker-compose up
