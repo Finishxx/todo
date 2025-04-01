@@ -14,7 +14,7 @@ functions, simplify the addition of new entities.
 To start the backend, run:
 
 ```bash
-$ ./gradlew runBoot
+$ ./gradlew bootRun
 ```
 
 Once the server is running, you can explore the API documentation at http://localhost:8080/swagger-ui/index.html or
