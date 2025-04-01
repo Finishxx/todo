@@ -4,7 +4,6 @@ import cz.orchitech.todobackend.api.dto.TodoEntryRequestDto;
 import cz.orchitech.todobackend.api.dto.TodoEntryResponseDto;
 import cz.orchitech.todobackend.business.TodoEntryService;
 import cz.orchitech.todobackend.model.TodoEntry;
-import cz.orchitech.todobackend.model.TodoEntryStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

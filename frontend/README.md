@@ -1,7 +1,7 @@
 # TODO frontend
 
-Rudimentary Typescript + Vue.js 3 frontend for Spring Boot `todo-backend` made
-as a part of interview preparation for a developer job.
+Rudimentary Typescript + Vue.js 3 frontend for Spring Boot backend made as a
+part of interview preparation for a developer job.
 
 ## Get started
 
@@ -19,20 +19,20 @@ $ npm run dev
 
 - MainHeader
 - Todo
-  - TodoSummary: Counts how many tasks there are for each status
-  - TodoFilter
-  - TodoEntryList: Lists entries and hosts CRUD buttons
-  - Modal
-    - TodoConfirmDeleteModal
-    - TodoEditModal
+    - TodoSummary: Counts how many tasks there are for each status
+    - TodoFilter
+    - TodoEntryList: Lists entries and hosts CRUD buttons
+    - Modal
+        - TodoConfirmDeleteModal
+        - TodoEditModal
 - MainFooter
 
 ## Known issues
 
-- No thought was given to mobile users
+- No thought was given to mobile users or responsiveness in general
 - The application is single page, but not in the sense of SPA needing Vue
   Router.
-- The styling and functionality are very basic
+- The styling and functionality are quite basic
 
 ## Attributions
 
