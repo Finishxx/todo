@@ -21,6 +21,15 @@ const props = defineProps<EditTodoEntryModalProps>()
 const name: Ref<string> = ref(props.name)
 const status: Ref<TodoEntryStatus> = ref(props.status)
 const statuses: TodoEntryStatus[] = Object.values(TodoEntryStatus)
+
+function onConfirm() {
+  // If the values did not change, then there needn't be an update
+  if (props.name == name.value && props.status == status.value) {
+    closeModal()
+  } else {
+    confirmModal({ name: name.value, status: status.value })
+  }
+}
 </script>
 
 <template>
@@ -39,12 +48,7 @@ const statuses: TodoEntryStatus[] = Object.values(TodoEntryStatus)
       </select>
     </form>
 
-    <button
-      @click="confirmModal({ name: name, status: status })"
-      class="w3-button"
-    >
-      Confirm
-    </button>
+    <button @click="onConfirm()" class="w3-button">Confirm</button>
     <button @click="closeModal()" class="w3-button">Close</button>
   </SimpleModal>
 </template>
