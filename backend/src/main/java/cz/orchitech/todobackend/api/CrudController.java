@@ -23,9 +23,7 @@ import java.util.stream.StreamSupport;
 public abstract class CrudController<E extends DomainEntity<K>, K, R, Q> {
 
     protected CrudService<E, K> service;
-    /** Ideally should not throw */
     protected Function<E, R> toDtoConverter;
-    /** Can throw since validation... ideally we would create a custom validator */
     protected Function<Q, E> toEntityConverter;
 
     public CrudController(CrudService<E, K> service, Function<E, R> toDtoConverter,
@@ -60,7 +58,7 @@ public abstract class CrudController<E extends DomainEntity<K>, K, R, Q> {
         R response = toDtoConverter.apply(created);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(entity.getId())
+                .buildAndExpand(created.getId())
                 .toUri();
         return ResponseEntity.created(location).body(response);
     }
