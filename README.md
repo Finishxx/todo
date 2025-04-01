@@ -19,4 +19,5 @@ The backend REST API should then be available to explore
 at http://localhost:8080/swagger-ui/index.html and the frontend should be
 available at http://localhost:5173/.
 
-Otherwise, it is possible to run both the frontend and backend locally.
+Otherwise, it naturally is possible to run both the frontend and backend
+locally.
